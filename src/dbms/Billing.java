@@ -6,6 +6,7 @@
 package dbms;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIDefaults;
@@ -36,21 +38,21 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 public class Billing extends javax.swing.JFrame {
 
     private String seatvar;
-    
-        
+    public static String selectedSeat;
+    public static String selectedQuantity;
+
     public Billing() {
         initComponents();
         AutoCompleteDecorator.decorate(combobox1);
         my_con connection = null;
         calc();
-        
-        
+
         seatl.setVisible(false);
         seat1.setVisible(false);
         timele.setVisible(false);
-        
-         login_name.setText(String.valueOf(FnClass.empname).toString());
-        
+        seattf.setText("");
+        login_name.setText(String.valueOf(FnClass.empname).toString());
+
         // table resizer
         table1.setAutoResizeMode(table1.AUTO_RESIZE_OFF);
         TableColumn col = table1.getColumnModel().getColumn(0);
@@ -61,61 +63,64 @@ public class Billing extends javax.swing.JFrame {
         col.setPreferredWidth(86);
         col = table1.getColumnModel().getColumn(3);
         col.setPreferredWidth(100);
-        
+
         // focus tranparent color 
         UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-        defaults.put("Button.focus", new ColorUIResource(new Color(0,0,0,0)));
-        
+        defaults.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
+
         // combobox focus off
-        JTextField editorComponent = (JTextField)combobox1.getEditor().getEditorComponent();
+        JTextField editorComponent = (JTextField) combobox1.getEditor().getEditorComponent();
         editorComponent.addActionListener(e -> {
             editorComponent.transferFocus();
         });
-        
+
         //table data to center
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         int alignment = 0;
         centerRenderer.setHorizontalAlignment(alignment);
-        TableModel model= table1.getModel();
-        for(int columnindex = 0; columnindex < model.getColumnCount(); columnindex++){
+        TableModel model = table1.getModel();
+        for (int columnindex = 0; columnindex < model.getColumnCount(); columnindex++) {
             table1.getColumnModel().getColumn(columnindex).setCellRenderer(centerRenderer);
-            
-           
-       
-       productdropdown();
+
+            productdropdown();
+        }
     }
-    }
- 
 
     public Billing(String seat_selected, String seat_quan) {
+
         initComponents();
-         seattf.setText(""+seat_selected);
-        quantitytf.setText(""+seat_quan);   
+//        seattf.setText(selectedSeat);
+//        quantitytf.setText(selectedQuantity);
     }
-    
-    public void setSeats(String seat_selected, String seat_quan){
-        
-        seattf.setText(""+seat_selected);
-        quantitytf.setText(""+seat_quan);
+
+    public void setData() {
+        seattf.setText(selectedSeat);
+        quantitytf.setText(selectedQuantity);
     }
-   
-    public void openseatFrame(){
+
+    public void setSeats(String seat_selected, String seat_quan) {
+
+        seattf.setText("" + seat_selected);
+        quantitytf.setText("" + seat_quan);
+    }
+
+    public void openseatFrame() {
         new seatFrame(this).setVisible(true);
         this.dispose();
     }
-    
-    public void calc(){
-       
+
+    public void calc() {
+
         DecimalFormat df = new DecimalFormat("0.00");
         double stotal = 0;
         double tax = 0;
         double total = 0;
         final double taxrate = 0.00;
-        for(int i = 0; i<table1.getRowCount();i++){
+        for (int i = 0; i < table1.getRowCount(); i++) {
             stotal += (Double.parseDouble(table1.getValueAt(i, 3).toString()));
             tax = stotal * taxrate;
-            total= stotal + tax;
-            
+            total = stotal + tax;
+
         }
         String otaxs = df.format(tax);
         String osubtotal = df.format(stotal);
@@ -124,7 +129,6 @@ public class Billing extends javax.swing.JFrame {
         tax_label.setText(otaxs);
         total_label.setText(ototal);
     }
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -463,6 +467,7 @@ public class Billing extends javax.swing.JFrame {
 
         seattf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         seattf.setForeground(new java.awt.Color(255, 153, 51));
+        seattf.setText("mn");
         seattf.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 102)));
         jPanel3.add(seattf, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 430, 150, 30));
 
@@ -476,7 +481,7 @@ public class Billing extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("Reservation Name :");
         jPanel4.add(jLabel5);
-        jLabel5.setBounds(20, 116, 139, 20);
+        jLabel5.setBounds(20, 116, 152, 19);
 
         namelabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel4.add(namelabel);
@@ -485,7 +490,7 @@ public class Billing extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel7.setText("Phone :");
         jPanel4.add(jLabel7);
-        jLabel7.setBounds(104, 157, 55, 20);
+        jLabel7.setBounds(104, 157, 59, 19);
 
         phonelabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPanel4.add(phonelabel);
@@ -565,7 +570,6 @@ public class Billing extends javax.swing.JFrame {
         });
         table1.setOpaque(false);
         table1.setRequestFocusEnabled(false);
-        table1.setRowHeight(18);
         table1.setSelectionBackground(new java.awt.Color(255, 102, 102));
         table1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -580,12 +584,12 @@ public class Billing extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Subtotal :");
         jPanel4.add(jLabel10);
-        jLabel10.setBounds(322, 340, 60, 17);
+        jLabel10.setBounds(322, 340, 66, 17);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("Tax :");
         jPanel4.add(jLabel11);
-        jLabel11.setBounds(350, 370, 32, 17);
+        jLabel11.setBounds(350, 370, 33, 17);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel12.setText("Total :");
@@ -616,7 +620,7 @@ public class Billing extends javax.swing.JFrame {
         seat1.setForeground(new java.awt.Color(102, 0, 51));
         seat1.setText("Seat No :");
         jPanel4.add(seat1);
-        seat1.setBounds(50, 350, 63, 22);
+        seat1.setBounds(50, 350, 77, 22);
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(613, 111, 590, 641));
 
@@ -714,9 +718,9 @@ public class Billing extends javax.swing.JFrame {
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
 
-        int cnf = JOptionPane.showConfirmDialog(null, "    Sign Out Your Account  \n\n","Sign Out",JOptionPane.YES_NO_OPTION);
+        int cnf = JOptionPane.showConfirmDialog(null, "    Sign Out Your Account  \n\n", "Sign Out", JOptionPane.YES_NO_OPTION);
 
-        if(cnf == 0){
+        if (cnf == 0) {
             login lon = new login();
             lon.setVisible(true);
             lon.pack();
@@ -726,13 +730,13 @@ public class Billing extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void close_3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close_3MouseExited
-        Border label_border=BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
+        Border label_border = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
         close_3.setBorder(label_border);
         close_3.setForeground(Color.white);
     }//GEN-LAST:event_close_3MouseExited
 
     private void close_3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close_3MouseEntered
-        Border label_border=BorderFactory.createMatteBorder(1, 1, 1, 1, Color.orange);
+        Border label_border = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.orange);
         close_3.setBorder(label_border);
         close_3.setForeground(Color.orange);
     }//GEN-LAST:event_close_3MouseEntered
@@ -747,13 +751,13 @@ public class Billing extends javax.swing.JFrame {
     }//GEN-LAST:event_close_3MouseClicked
 
     private void minimize_1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_1MouseExited
-        Border label_border=BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
+        Border label_border = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
         minimize_1.setBorder(label_border);
         minimize_1.setForeground(Color.white);
     }//GEN-LAST:event_minimize_1MouseExited
 
     private void minimize_1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize_1MouseEntered
-        Border label_border=BorderFactory.createMatteBorder(1, 1, 1, 1, Color.orange);
+        Border label_border = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.orange);
         minimize_1.setBorder(label_border);
         minimize_1.setForeground(Color.orange);
     }//GEN-LAST:event_minimize_1MouseEntered
@@ -768,8 +772,8 @@ public class Billing extends javax.swing.JFrame {
         //        int key = evt.getKeyCode();
         //
         //        if(key == 10){
-            //            nametf.requestFocus();
-            //        }
+        //            nametf.requestFocus();
+        //        }
     }//GEN-LAST:event_jLabel1KeyPressed
 
     private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
@@ -788,15 +792,13 @@ public class Billing extends javax.swing.JFrame {
     private void deletebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebuttonActionPerformed
 
         DefaultTableModel model = (DefaultTableModel) table1.getModel();
-        if(table1.getSelectedRow()==-1){
-            if(table1.getRowCount() == 0){
-                JOptionPane.showMessageDialog(null,"No Item Found","Blank",1);
+        if (table1.getSelectedRow() == -1) {
+            if (table1.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No Item Found", "Blank", 1);
+            } else {
+                JOptionPane.showMessageDialog(null, "You Must Select An Item", "Oho", 1);
             }
-            else{
-                JOptionPane.showMessageDialog(null,"You Must Select An Item","Oho",1);
-            }
-        }
-        else{
+        } else {
             model.removeRow(table1.getSelectedRow());
             combobox1.setSelectedItem("");
             pricelabel.setText("");
@@ -813,30 +815,26 @@ public class Billing extends javax.swing.JFrame {
     private void updatebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatebuttonActionPerformed
 
         //updatebutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_U, KeyEvent.VK_ALT), evt);
+        if (combobox1.getSelectedIndex() == 0) {
 
-        if(combobox1.getSelectedIndex() == 0){
-
-            JOptionPane.showMessageDialog(null,"You Must Select An Item","Empty Item",1);
-        }
-        else{
+            JOptionPane.showMessageDialog(null, "You Must Select An Item", "Empty Item", 1);
+        } else {
             DefaultTableModel model = (DefaultTableModel) table1.getModel();
-            if(table1.getSelectedRow()==-1){
-                if(table1.getRowCount() == 0){
-                    JOptionPane.showMessageDialog(null,"No Item Found","Blank",1);
+            if (table1.getSelectedRow() == -1) {
+                if (table1.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "No Item Found", "Blank", 1);
+                } else {
+                    JOptionPane.showMessageDialog(null, "You Must Select An Item", "Oho", 1);
                 }
-                else{
-                    JOptionPane.showMessageDialog(null,"You Must Select An Item","Oho",1);
-                }
-            }
-            else{
+            } else {
                 model.setValueAt(combobox1.getSelectedItem().toString(), table1.getSelectedRow(), 0);
                 //model.setValueAt(pricelabel.getText(), table1.getSelectedRow(), 1);
                 model.setValueAt(quantitytf.getText(), table1.getSelectedRow(), 2);
-                for(int i=0; i<model.getRowCount();i++){
+                for (int i = 0; i < model.getRowCount(); i++) {
                     //Double d1 = Double.parseDouble((String) model.getValueAt(i, 1));
                     Double d1 = Double.parseDouble(pricelabel.getText());
                     Double d2 = Double.parseDouble((String) model.getValueAt(i, 2));
-                    Double d3 = d1*d2;
+                    Double d3 = d1 * d2;
                     model.setValueAt(d3, i, 3);
                 }
                 table1.clearSelection();
@@ -850,16 +848,15 @@ public class Billing extends javax.swing.JFrame {
 
     private void clrbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clrbtnActionPerformed
 
-        if("".equals(nametf.getText().trim()) || "".equals(phonetf.getText().trim())){
+        if ("".equals(nametf.getText().trim()) || "".equals(phonetf.getText().trim())) {
 
-            JOptionPane.showMessageDialog(null,"No Data Found","Empty",1);
+            JOptionPane.showMessageDialog(null, "No Data Found", "Empty", 1);
 
-        }
-        else{
+        } else {
 
-            int nf = JOptionPane.showConfirmDialog(null, "\n             Clear All\n\n","Clear",JOptionPane.YES_NO_OPTION);
+            int nf = JOptionPane.showConfirmDialog(null, "\n             Clear All\n\n", "Clear", JOptionPane.YES_NO_OPTION);
 
-            if(nf == 0){
+            if (nf == 0) {
                 nametf.setText("");
                 phonetf.setText("");
                 combobox1.setSelectedIndex(0);
@@ -876,15 +873,15 @@ public class Billing extends javax.swing.JFrame {
                 quantitytf.setText("");
 
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
-                for(int i = 0; i<table1.getRowCount();i++){
+                for (int i = 0; i < table1.getRowCount(); i++) {
 
                     model.removeRow(i);
                 }
-                for(int j = 0; j<table1.getRowCount();j++){
+                for (int j = 0; j < table1.getRowCount(); j++) {
 
                     model.removeRow(j);
                 }
-                for(int k = 0; k<table1.getRowCount();k++){
+                for (int k = 0; k < table1.getRowCount(); k++) {
 
                     model.removeRow(k);
                 }
@@ -931,32 +928,28 @@ public class Billing extends javax.swing.JFrame {
             ps = my_con.getConnection().prepareStatement(salesQuery);
 
             //for(int i =0 ; i<table1.getRowCount(); i++){
-                ps.setString(1, Reservation_name);
-                ps.setString(2, phone);
-                //ps.setString(3, table1.getValueAt(i, 0).toString());
-                ps.setString(3, phone);
-               // ps.setString(4, table1.getValueAt(i, 1).toString());
-                ps.setString(4, time);
-                ps.setString(5, seat);
-                ps.setString(6, pricel);
-                //ps.setString(7, table1.getValueAt(i, 2).toString());
-                ps.setString(7, quantity);
-                //ps.setString(8, table1.getValueAt(i, 3).toString());
-                ps.setString(8, total);
+            ps.setString(1, Reservation_name);
+            ps.setString(2, phone);
+            //ps.setString(3, table1.getValueAt(i, 0).toString());
+            ps.setString(3, phone);
+            // ps.setString(4, table1.getValueAt(i, 1).toString());
+            ps.setString(4, time);
+            ps.setString(5, seat);
+            ps.setString(6, pricel);
+            //ps.setString(7, table1.getValueAt(i, 2).toString());
+            ps.setString(7, quantity);
+            //ps.setString(8, table1.getValueAt(i, 3).toString());
+            ps.setString(8, total);
 
-                ps.executeUpdate();
-            
+            ps.executeUpdate();
 
-            if(ps.executeUpdate() != 0){
+            if (ps.executeUpdate() != 0) {
 
-                JOptionPane.showMessageDialog(null,"\nSave Succesfully\n\n","Saved",1);
+                JOptionPane.showMessageDialog(null, "\nSave Succesfully\n\n", "Saved", 1);
+            } else {
+                JOptionPane.showMessageDialog(null, "\nCheck Error\n\n", "Error", 1);
             }
-            else{
-                JOptionPane.showMessageDialog(null,"\nCheck Error\n\n","Error",1);
-            }
-        }
-
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(registration.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_savabuttonActionPerformed
@@ -978,37 +971,32 @@ public class Billing extends javax.swing.JFrame {
         DecimalFormat df = new DecimalFormat("0.00");
         double price = 0;
 
-        if(nametf.getText().trim().equals("") || phonetf.getText().trim().equals("")){
+        if (nametf.getText().trim().equals("") || phonetf.getText().trim().equals("")) {
 
-            if(nametf.getText().trim().equals("")){
-                JOptionPane.showMessageDialog(null, "  Empty :   Customer Name","Empty Field",1);
+            if (nametf.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "  Empty :   Customer Name", "Empty Field", 1);
                 nametf.requestFocus();
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "    Empty :    Phone No","Empty Field",1);
+            } else {
+                JOptionPane.showMessageDialog(null, "    Empty :    Phone No", "Empty Field", 1);
                 phonetf.requestFocus();
             }
 
-        }
-
-        else{
+        } else {
 
             DefaultTableModel model = (DefaultTableModel) table1.getModel();
 
-            if(combobox1.getSelectedIndex() > 0 || combobox1.getSelectedIndex() != 0){
+            if (combobox1.getSelectedIndex() > 0 || combobox1.getSelectedIndex() != 0) {
 
-                if(quantitytf.getText().trim().equals("")){
+                if (quantitytf.getText().trim().equals("")) {
 
-                    JOptionPane.showMessageDialog(null, "Check Out Quantity.","Empty Field",3);
-                }
-                else
-                {
-                    model.addRow(new Object[]{(String) combobox1.getSelectedItem(),timecb.getName(),quantitytf.getText()});
-                    for(int i=0; i<model.getRowCount();i++){
-                       // Double d1 = Double.parseDouble((String) model.getValueAt(i, 1));
+                    JOptionPane.showMessageDialog(null, "Check Out Quantity.", "Empty Field", 3);
+                } else {
+                    model.addRow(new Object[]{(String) combobox1.getSelectedItem(), timecb.getName(), quantitytf.getText()});
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        // Double d1 = Double.parseDouble((String) model.getValueAt(i, 1));
                         Double d1 = Double.parseDouble(pricelabel.getText());
                         Double d2 = Double.parseDouble((String) model.getValueAt(i, 2));
-                        Double d3 = d1*d2;
+                        Double d3 = d1 * d2;
 
                         String tprice = df.format(d3);
                         model.setValueAt(tprice, i, 3);
@@ -1023,11 +1011,8 @@ public class Billing extends javax.swing.JFrame {
                     String phone = phonetf.getText();
                     phonelabel.setText(phone);
                 }
-            }
-
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Haven't Selected Item ?","Empty Field",3);
+            } else {
+                JOptionPane.showMessageDialog(null, "Haven't Selected Item ?", "Empty Field", 3);
                 combobox1.requestFocus();
             }
 
@@ -1048,8 +1033,8 @@ public class Billing extends javax.swing.JFrame {
 
     private void combobox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox1ActionPerformed
 
-        if(combobox1.getSelectedIndex() == 0){
-            JOptionPane.showMessageDialog(null,"Invalid Item Selected","Invalid",1);
+        if (combobox1.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Invalid Item Selected", "Invalid", 1);
             combobox1.requestFocus();
         }
 
@@ -1057,17 +1042,17 @@ public class Billing extends javax.swing.JFrame {
 
         try {
 
-            String fatch_row="SELECT * FROM `product_list` WHERE product = ?";
+            String fatch_row = "SELECT * FROM `product_list` WHERE product = ?";
 
             PreparedStatement statement = my_con.getConnection().prepareStatement(fatch_row);
-            statement.setString(1, (String)combobox1.getSelectedItem());
+            statement.setString(1, (String) combobox1.getSelectedItem());
 
             ResultSet set = statement.executeQuery();
 
-            if(set.next()){
+            if (set.next()) {
 
                 // statement.setString(2, (String)pricelabel.getText());
-                Border label_border=BorderFactory.createLineBorder(new Color(255,153,51), 1);
+                Border label_border = BorderFactory.createLineBorder(new Color(255, 153, 51), 1);
                 pricelabel.setBorder(label_border);
                 pricelabel.setText(set.getString("price"));
 
@@ -1088,7 +1073,7 @@ public class Billing extends javax.swing.JFrame {
 
     private void phonetfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_phonetfKeyTyped
 
-        if(!Character.isDigit(evt.getKeyChar())){
+        if (!Character.isDigit(evt.getKeyChar())) {
             evt.consume();
         }
     }//GEN-LAST:event_phonetfKeyTyped
@@ -1097,7 +1082,7 @@ public class Billing extends javax.swing.JFrame {
 
         int key = evt.getKeyCode();
 
-        if(key == 10){
+        if (key == 10) {
             combobox1.requestFocus();
         }
     }//GEN-LAST:event_phonetfKeyPressed
@@ -1122,7 +1107,7 @@ public class Billing extends javax.swing.JFrame {
 
         int key = evt.getKeyCode();
 
-        if(key == 10){
+        if (key == 10) {
             phonetf.requestFocus();
         }
     }//GEN-LAST:event_nametfKeyPressed
@@ -1164,57 +1149,55 @@ public class Billing extends javax.swing.JFrame {
     }//GEN-LAST:event_nametfFocusGained
 
     private void timecbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timecbActionPerformed
-       
+
     }//GEN-LAST:event_timecbActionPerformed
 
     private void timecbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_timecbMouseClicked
-       
-        
+
+
     }//GEN-LAST:event_timecbMouseClicked
 
     private void timecbItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_timecbItemStateChanged
-       timele.setVisible(true);
+        timele.setVisible(true);
         String tl = timecb.getSelectedItem().toString();
         timele.setText(tl);
     }//GEN-LAST:event_timecbItemStateChanged
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-      
-                seats form = new seats();
-                form.setVisible(true);
-                form.pack();
-                form.setLocationRelativeTo(null);
+        seats.billing = this;
+        seats form = new seats();
+        form.setVisible(true);
+        form.pack();
+        form.setLocationRelativeTo(null);
     }//GEN-LAST:event_jLabel18MouseClicked
 
-    private void productdropdown(){
-        
+    private void productdropdown() {
+
         try {
-            
-            String product="SELECT * FROM product_list ";
+
+            String product = "SELECT * FROM product_list ";
             Statement statement = my_con.getConnection().createStatement();
-            
+
             ResultSet set = statement.executeQuery(product);
-          
-            while(set.next()){
-              //  pricelabel.setText(set.getString("price"));
-              combobox1.addItem(set.getString("product"));
-           
+
+            while (set.next()) {
+                //  pricelabel.setText(set.getString("price"));
+                combobox1.addItem(set.getString("product"));
+
             }
-            
+
         } catch (SQLException ex) {
-            
+
         }
-        
+
     }
-    
- 
+
     public static void main(String args[]) {
-        
-           
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Billing().setVisible(true);
-               
+
             }
         });
     }
@@ -1289,6 +1272,5 @@ public class Billing extends javax.swing.JFrame {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
-
 
 }
