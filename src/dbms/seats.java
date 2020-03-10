@@ -1,27 +1,22 @@
-
 package dbms;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 import javax.swing.JFrame;
-import javax.swing.table.TableModel;
-
 
 public class seats extends javax.swing.JFrame {
 
+    public static Billing billing;
 
     public seats() {
         initComponents();
-     
-         selectbutton.addActionListener(e -> selectbuttonActionPerformed());
-       
-        Handler hand = new Handler(); 
+
+        selectbutton.addActionListener(e -> selectbuttonActionPerformed());
+
+        Handler hand = new Handler();
         a1.addActionListener(hand);
         b1.addActionListener(hand);
         c1.addActionListener(hand);
@@ -44,241 +39,219 @@ public class seats extends javax.swing.JFrame {
         l2.addActionListener(hand);
         m1.addActionListener(hand);
         m2.addActionListener(hand);
-       
-        
+
     }
 
     private void selectbuttonActionPerformed() {
-        
+
     }
-  public class seatFrame extends JFrame{
+
+    public class seatFrame extends JFrame {
+
         private Billing parent;
-        
-        public seatFrame(Billing parent){
-                this.parent = parent;
-    }      
-    
-    private void selectbuttonActionPerformed() {
-        String seat_selected = seat_label.getText();
-        String seat_quan = seat_q.getText();
-        parent.setSeats(seat_selected, seat_quan);
-        parent.setVisible(true);
-        this.dispose();
-    }}
 
+        public seatFrame(Billing parent) {
+            this.parent = parent;
+        }
 
-    class Handler implements ActionListener{
+        private void selectbuttonActionPerformed() {
+            String seat_selected = seat_label.getText();
+            String seat_quan = seat_q.getText();
+            parent.setSeats(seat_selected, seat_quan);
+            parent.setVisible(true);
+            this.dispose();
+        }
+    }
+
+    class Handler implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-           ArrayList list = new ArrayList();
-            if(a1.isSelected()){
-               list.add("A1");
-               a1.setBackground(Color.orange);
-               a1.setForeground(Color.black);
-            }
-            else{
-                a1.setBackground(new Color(51,51,51));
+            ArrayList list = new ArrayList();
+            if (a1.isSelected()) {
+                list.add("A1");
+                a1.setBackground(Color.orange);
+                a1.setForeground(Color.black);
+            } else {
+                a1.setBackground(new Color(51, 51, 51));
                 a1.setForeground(Color.white);
             }
-            if(b1.isSelected()){
-               list.add("B1");
-               b1.setBackground(Color.orange);
-               b1.setForeground(Color.black);
-            }
-            else{
-                b1.setBackground(new Color(51,51,51));
+            if (b1.isSelected()) {
+                list.add("B1");
+                b1.setBackground(Color.orange);
+                b1.setForeground(Color.black);
+            } else {
+                b1.setBackground(new Color(51, 51, 51));
                 b1.setForeground(Color.white);
             }
-            if(c1.isSelected()){
-               list.add("C1");
-               c1.setBackground(Color.orange);
-               c1.setForeground(Color.black);
-            }
-            else{
-                c1.setBackground(new Color(51,51,51));
+            if (c1.isSelected()) {
+                list.add("C1");
+                c1.setBackground(Color.orange);
+                c1.setForeground(Color.black);
+            } else {
+                c1.setBackground(new Color(51, 51, 51));
                 c1.setForeground(Color.white);
             }
-            if(d1.isSelected()){
-               list.add("D1");
-               d1.setBackground(Color.orange);
-               d1.setForeground(Color.black);
-            }
-            else{
-                d1.setBackground(new Color(51,51,51));
+            if (d1.isSelected()) {
+                list.add("D1");
+                d1.setBackground(Color.orange);
+                d1.setForeground(Color.black);
+            } else {
+                d1.setBackground(new Color(51, 51, 51));
                 d1.setForeground(Color.white);
             }
-            if(e1.isSelected()){
-               list.add("E1");
-               e1.setBackground(Color.orange);
-               e1.setForeground(Color.black);
-            }
-            else{
-                e1.setBackground(new Color(51,51,51));
+            if (e1.isSelected()) {
+                list.add("E1");
+                e1.setBackground(Color.orange);
+                e1.setForeground(Color.black);
+            } else {
+                e1.setBackground(new Color(51, 51, 51));
                 e1.setForeground(Color.white);
             }
-            if(f1.isSelected()){
-               list.add("F1");
-               f1.setBackground(Color.orange);
-               f1.setForeground(Color.black);
-            }
-            else{
-                f1.setBackground(new Color(51,51,51));
+            if (f1.isSelected()) {
+                list.add("F1");
+                f1.setBackground(Color.orange);
+                f1.setForeground(Color.black);
+            } else {
+                f1.setBackground(new Color(51, 51, 51));
                 f1.setForeground(Color.white);
             }
-            if(g1.isSelected()){
-               list.add("G1");
-               g1.setBackground(Color.orange);
-               g1.setForeground(Color.black);
-            }
-            else{
-                g1.setBackground(new Color(51,51,51));
+            if (g1.isSelected()) {
+                list.add("G1");
+                g1.setBackground(Color.orange);
+                g1.setForeground(Color.black);
+            } else {
+                g1.setBackground(new Color(51, 51, 51));
                 g1.setForeground(Color.white);
             }
-            if(g2.isSelected()){
-               list.add("G2");
-               g2.setBackground(Color.orange);
-               g2.setForeground(Color.black);
-            }
-            else{
-                g2.setBackground(new Color(51,51,51));
+            if (g2.isSelected()) {
+                list.add("G2");
+                g2.setBackground(Color.orange);
+                g2.setForeground(Color.black);
+            } else {
+                g2.setBackground(new Color(51, 51, 51));
                 g2.setForeground(Color.white);
             }
-            if(g3.isSelected()){
-               list.add("G3");
-               g3.setBackground(Color.orange);
-               g3.setForeground(Color.black);
-            }
-            else{
-                g3.setBackground(new Color(51,51,51));
+            if (g3.isSelected()) {
+                list.add("G3");
+                g3.setBackground(Color.orange);
+                g3.setForeground(Color.black);
+            } else {
+                g3.setBackground(new Color(51, 51, 51));
                 g3.setForeground(Color.white);
             }
-            if(g4.isSelected()){
-               list.add("G4");
-               g4.setBackground(Color.orange);
-               g4.setForeground(Color.black);
-            }
-            else{
-                g4.setBackground(new Color(51,51,51));
+            if (g4.isSelected()) {
+                list.add("G4");
+                g4.setBackground(Color.orange);
+                g4.setForeground(Color.black);
+            } else {
+                g4.setBackground(new Color(51, 51, 51));
                 g4.setForeground(Color.white);
             }
-            if(h1.isSelected()){
-               list.add("H1");
-               h1.setBackground(Color.orange);
-               h1.setForeground(Color.black);
-            }
-            else{
-                h1.setBackground(new Color(51,51,51));
+            if (h1.isSelected()) {
+                list.add("H1");
+                h1.setBackground(Color.orange);
+                h1.setForeground(Color.black);
+            } else {
+                h1.setBackground(new Color(51, 51, 51));
                 h1.setForeground(Color.white);
             }
-            if(h2.isSelected()){
-               list.add("H2");
-               h2.setBackground(Color.orange);
-               h2.setForeground(Color.black);
-            }
-            else{
-                h2.setBackground(new Color(51,51,51));
+            if (h2.isSelected()) {
+                list.add("H2");
+                h2.setBackground(Color.orange);
+                h2.setForeground(Color.black);
+            } else {
+                h2.setBackground(new Color(51, 51, 51));
                 h2.setForeground(Color.white);
             }
-            if(i1.isSelected()){
-               list.add("I1");
-               i1.setBackground(Color.orange);
-               i1.setForeground(Color.black);
-            }
-            else{
-                i1.setBackground(new Color(51,51,51));
+            if (i1.isSelected()) {
+                list.add("I1");
+                i1.setBackground(Color.orange);
+                i1.setForeground(Color.black);
+            } else {
+                i1.setBackground(new Color(51, 51, 51));
                 i1.setForeground(Color.white);
             }
-            if(i2.isSelected()){
-               list.add("I2");
-               i2.setBackground(Color.orange);
-               i2.setForeground(Color.black);
-            }
-            else{
-                i2.setBackground(new Color(51,51,51));
+            if (i2.isSelected()) {
+                list.add("I2");
+                i2.setBackground(Color.orange);
+                i2.setForeground(Color.black);
+            } else {
+                i2.setBackground(new Color(51, 51, 51));
                 i2.setForeground(Color.white);
             }
-            if(j1.isSelected()){
-               list.add("J1");
-               j1.setBackground(Color.orange);
-               j1.setForeground(Color.black);
-            }
-            else{
-                j1.setBackground(new Color(51,51,51));
+            if (j1.isSelected()) {
+                list.add("J1");
+                j1.setBackground(Color.orange);
+                j1.setForeground(Color.black);
+            } else {
+                j1.setBackground(new Color(51, 51, 51));
                 j1.setForeground(Color.white);
             }
-            if(j2.isSelected()){
-               list.add("J2");
-               j2.setBackground(Color.orange);
-               j2.setForeground(Color.black);
-            }
-            else{
-                j2.setBackground(new Color(51,51,51));
+            if (j2.isSelected()) {
+                list.add("J2");
+                j2.setBackground(Color.orange);
+                j2.setForeground(Color.black);
+            } else {
+                j2.setBackground(new Color(51, 51, 51));
                 j2.setForeground(Color.white);
             }
-            if(k1.isSelected()){
-               list.add("K1");
-               k1.setBackground(Color.orange);
-               k1.setForeground(Color.black);
-            }
-            else{
-                k1.setBackground(new Color(51,51,51));
+            if (k1.isSelected()) {
+                list.add("K1");
+                k1.setBackground(Color.orange);
+                k1.setForeground(Color.black);
+            } else {
+                k1.setBackground(new Color(51, 51, 51));
                 k1.setForeground(Color.white);
             }
-            if(k2.isSelected()){
-               list.add("K2");
-               k2.setBackground(Color.orange);
-               k2.setForeground(Color.black);
-            }
-            else{
-                k2.setBackground(new Color(51,51,51));
+            if (k2.isSelected()) {
+                list.add("K2");
+                k2.setBackground(Color.orange);
+                k2.setForeground(Color.black);
+            } else {
+                k2.setBackground(new Color(51, 51, 51));
                 k2.setForeground(Color.white);
             }
-            if(l1.isSelected()){
-               list.add("L1");
-               l1.setBackground(Color.orange);
-               l1.setForeground(Color.black);
-            }
-            else{
-                l1.setBackground(new Color(51,51,51));
+            if (l1.isSelected()) {
+                list.add("L1");
+                l1.setBackground(Color.orange);
+                l1.setForeground(Color.black);
+            } else {
+                l1.setBackground(new Color(51, 51, 51));
                 l1.setForeground(Color.white);
             }
-            if(l2.isSelected()){
-               list.add("L2");
-               l2.setBackground(Color.orange);
-               l2.setForeground(Color.black);
-            }
-            else{
-                l2.setBackground(new Color(51,51,51));
+            if (l2.isSelected()) {
+                list.add("L2");
+                l2.setBackground(Color.orange);
+                l2.setForeground(Color.black);
+            } else {
+                l2.setBackground(new Color(51, 51, 51));
                 l2.setForeground(Color.white);
             }
-            if(m1.isSelected()){
-               list.add("M1");
-               m1.setBackground(Color.orange);
-               m1.setForeground(Color.black);
-            }
-            else{
-                m1.setBackground(new Color(51,51,51));
+            if (m1.isSelected()) {
+                list.add("M1");
+                m1.setBackground(Color.orange);
+                m1.setForeground(Color.black);
+            } else {
+                m1.setBackground(new Color(51, 51, 51));
                 m1.setForeground(Color.white);
             }
-            if(m2.isSelected()){
-               list.add("M2");
-               m2.setBackground(Color.orange);
-               m2.setForeground(Color.black);
-            }
-            else{
-                m2.setBackground(new Color(51,51,51));
+            if (m2.isSelected()) {
+                list.add("M2");
+                m2.setBackground(Color.orange);
+                m2.setForeground(Color.black);
+            } else {
+                m2.setBackground(new Color(51, 51, 51));
                 m2.setForeground(Color.white);
             }
-            
-           seat_label.setText(" "+list);
-           seat_q.setText(""+list.size());
-           
+
+            seat_label.setText(" " + list);
+            seat_q.setText("" + list.size());
+
         }
-        
+
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -685,43 +658,37 @@ public class seats extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-   
 //    public class seatFrame extends JFrame{
 //        private Billing parent;
 //        
 //        public seatFrame(Billing parent){
 //                this.parent = parent;
 //    }      
-    
+
     private void selectbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectbuttonActionPerformed
-    
-//        String seat_selected = seat_label.getText();
-//        String seat_quan = seat_q.getText();
-//        Billing billing = new Billing(seat_selected,seat_quan);
-//        billing.setVisible(true);
-//        billing.dispose();
-//        this.setVisible(false);
-//       
-       
-    
+
+        Billing.selectedSeat = seat_label.getText();
+        Billing.selectedQuantity = seat_q.getText();
+        billing.setData();
+        this.setVisible(false);
+
     }//GEN-LAST:event_selectbuttonActionPerformed
-    
+
     private void closebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closebuttonActionPerformed
-                       
-                            this.dispose();
+
+        this.dispose();
     }//GEN-LAST:event_closebuttonActionPerformed
- 
+
     private void selectbuttonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_selectbuttonKeyPressed
-       
+
     }//GEN-LAST:event_selectbuttonKeyPressed
 
     private void selectbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectbuttonMouseClicked
-       
+
     }//GEN-LAST:event_selectbuttonMouseClicked
 
-    
     public static void main(String args[]) {
-       
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new seats().setVisible(true);
